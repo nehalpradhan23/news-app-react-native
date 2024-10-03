@@ -27,7 +27,8 @@ const Page = (props: Props) => {
 
   const getBreakingNews = async () => {
     try {
-      const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&category=business&image=1&removeduplicate=1&size=5`;
+      // const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&image=1&removeduplicate=1&size=5&country=in&category=business,domestic`;
+      const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&image=1&removeduplicate=1&size=5`;
       const res = await axios.get(URL);
       if (res && res.data) {
         setBreakingNews(res.data.results);
