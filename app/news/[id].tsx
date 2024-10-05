@@ -89,7 +89,7 @@ export default NewsDetails;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: Colors.white,
     paddingHorizontal: 20,
   },

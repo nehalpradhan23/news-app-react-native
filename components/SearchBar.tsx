@@ -1,13 +1,21 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputChangeEventData,
+  View,
+} from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 
 type Props = {
   withHorizontalPadding: boolean;
+  setSearchQuery: Function;
 };
 
-const SearchBar = ({ withHorizontalPadding }: Props) => {
+const SearchBar = ({ withHorizontalPadding, setSearchQuery }: Props) => {
   return (
     <View
       style={[
@@ -22,6 +30,7 @@ const SearchBar = ({ withHorizontalPadding }: Props) => {
           placeholderTextColor={Colors.lightGrey}
           style={styles.searchText}
           autoCapitalize="none"
+          onChangeText={(query) => setSearchQuery(query)}
         />
       </View>
     </View>

@@ -24,6 +24,7 @@ const Page = (props: Props) => {
   const [breakingNews, setBreakingNews] = useState<NewsDataType[]>([]);
   const [news, setNews] = useState<NewsDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getBreakingNews = async () => {
     try {
@@ -70,7 +71,7 @@ const Page = (props: Props) => {
   return (
     <ScrollView style={[styles.container, { paddingTop: safeTop }]}>
       <Header />
-      <SearchBar withHorizontalPadding={true} />
+      <SearchBar withHorizontalPadding={true} setSearchQuery={setSearchQuery} />
       {isLoading ? (
         <Loading size={"large"} />
       ) : (
