@@ -14,6 +14,7 @@ import { NewsDataType } from "@/types";
 import Loading from "@/components/Loading";
 import { Colors } from "@/constants/Colors";
 import moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = {};
 
@@ -22,6 +23,8 @@ const NewsDetails = (props: Props) => {
 
   const [news, setNews] = useState<NewsDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [bookmark, setBookmark] = useState(false);
 
   const getNews = async () => {
     try {
@@ -40,6 +43,51 @@ const NewsDetails = (props: Props) => {
     getNews();
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      removeBookmark(news[0].article_id);
+    }
+  }, [isLoading]);
+
+  const saveBookmark = async (newsId: string) => {
+    setBookmark(true);
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((value: string) => value === newsId);
+        if (data == null) {
+          res.push(newsId);
+          AsyncStorage.setItem("bookmark", JSON.stringify(res));
+          alert("News saved!");
+        }
+      } else {
+        let bookmark = [];
+        bookmark.push(newsId);
+        AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+        alert("News saved!");
+      }
+    });
+  };
+
+  const removeBookmark = async (newsId: string) => {
+    setBookmark(false);
+    const bookmark = await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      return res.filter((id: string) => id !== newsId);
+    });
+    await AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+    alert("News unsaved");
+  };
+
+  const renderBookmark = async (newsId: string) => {
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((value: string) => value === newsId);
+        return data == null ? setBookmark(false) : setBookmark(true);
+      }
+    });
+  };
   // ============================================
   return (
     <>
@@ -51,8 +99,18 @@ const NewsDetails = (props: Props) => {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <TouchableOpacity onPress={() => {}}>
-              <Ionicons name="heart-outline" size={22} />
+            <TouchableOpacity
+              onPress={() =>
+                bookmark
+                  ? removeBookmark(news[0].article_id)
+                  : saveBookmark(news[0].article_id)
+              }
+            >
+              <Ionicons
+                name={bookmark ? "heart" : "heart-outline"}
+                size={22}
+                color={bookmark ? "red" : Colors.black}
+              />
             </TouchableOpacity>
           ),
           title: "",
