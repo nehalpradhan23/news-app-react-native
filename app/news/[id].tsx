@@ -45,7 +45,7 @@ const NewsDetails = (props: Props) => {
 
   useEffect(() => {
     if (!isLoading) {
-      removeBookmark(news[0].article_id);
+      renderBookmark(news[0].article_id);
     }
   }, [isLoading]);
 
