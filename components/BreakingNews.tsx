@@ -25,7 +25,7 @@ type Props = {
 
 const BreakingNews = ({ newsList }: Props) => {
   const [data, setData] = useState(newsList);
-  // console.log("breaking news: ", data);
+
   const [paginationIndex, setPaginationIndex] = useState(0);
   const scrollX = useSharedValue(0);
   const ref = useAnimatedRef<Animated.FlatList<any>>();

@@ -27,8 +27,6 @@ type Props = {
 const { width } = Dimensions.get("screen");
 
 const SliderItem = ({ slideItem, index, scrollX }: Props) => {
-  // console.log("slide item:", slideItem);
-
   const rnStyle = useAnimatedStyle(() => {
     return {
       transform: [

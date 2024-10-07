@@ -58,7 +58,6 @@ const Page = (props: Props) => {
   };
 
   const onCatChanged = (category: string) => {
-    console.log("Category:", category);
     setNews([]);
     getNews(category);
   };
